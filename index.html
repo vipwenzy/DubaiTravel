@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>迪拜 & 阿布扎比 2026 春节亲子自驾最终全案</title>
+    <title>Simon Family Dubai Trip 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -14,7 +14,7 @@
             --secondary: #10b981;
             --accent: #f59e0b;
             --party: #ea580c;
-            --business: #6366f1;
+            --business: #7c3aed;
             --bg: #f8fafc;
         }
 
@@ -23,51 +23,55 @@
             background-color: var(--bg);
             -webkit-tap-highlight-color: transparent;
             color: #1e293b;
-            line-height: 1.5;
+            padding-bottom: 80px;
         }
 
+        /* 动画 */
         .day-section { display: none; }
         .day-section.active { display: block; animation: slideUp 0.3s ease-out; }
-        
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .nav-btn {
-            flex: 0 0 auto;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        /* 顶部导航 */
+        .nav-btn { flex: 0 0 auto; transition: all 0.2s; }
         .nav-btn.active {
-            background: var(--primary);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             color: white;
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+            border: none;
         }
 
+        /* 地图容器 */
         .map-container {
             position: sticky;
-            top: 64px;
+            top: 60px;
             z-index: 40;
             height: 240px;
-            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 0 0 24px 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: height 0.3s ease;
+            background: #e2e8f0;
         }
         @media (min-width: 1024px) {
-            .map-container { height: calc(100vh - 140px); position: sticky; top: 100px; }
+            .map-container { height: calc(100vh - 120px); position: sticky; top: 100px; border-radius: 24px; }
         }
 
+        /* 时间轴 */
         .time-node {
             position: relative;
-            padding-left: 2rem;
+            padding-left: 1.5rem;
             margin-left: 0.5rem;
-            padding-bottom: 1.5rem;
-            border-left: 2px solid #e2e8f0;
+            padding-bottom: 2rem;
+            border-left: 2px dashed #cbd5e1;
         }
         .time-node::before {
             content: '';
             position: absolute;
             left: -7px;
-            top: 4px;
+            top: 6px;
             width: 12px;
             height: 12px;
             background: white;
@@ -75,310 +79,475 @@
             border-radius: 50%;
             z-index: 10;
         }
-        .time-node.home-node::before { border-color: var(--secondary); }
-        .time-node.party-node::before { border-color: var(--party); }
-        .time-node.business-node::before { border-color: var(--business); }
         .time-node:last-child { border-left: none; }
+        
+        /* 节点颜色区分 */
+        .time-node.morning-node::before { border-color: #f59e0b; background: #fffbeb; } /* 早餐 */
+        .time-node.home-node::before { border-color: var(--secondary); }
+        .time-node.party-node { border-left-color: #fdba74; }
+        .time-node.party-node::before { border-color: var(--party); background: #fff7ed; }
+        .time-node.business-node { border-left-color: #c4b5fd; }
+        .time-node.business-node::before { border-color: var(--business); background: #f5f3ff; }
 
+        /* 卡片 */
         .action-card {
             background: white;
-            border-radius: 20px;
-            padding: 14px;
-            border: 1px solid #f1f5f9;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            transition: all 0.2s;
-            cursor: pointer;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid #eef1f6;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            transition: transform 0.1s;
         }
-        .action-card:active { transform: scale(0.97); background: #f8fafc; }
+        .action-card:active { transform: scale(0.98); background: #f0f5ff; }
+
+        /* 谷歌导航主按钮 */
+        .btn-google {
+            margin-top: 12px;
+            width: 100%;
+            background: #4285F4;
+            color: white;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            gap: 8px;
+            box-shadow: 0 4px 6px -1px rgba(66, 133, 244, 0.2);
+            transition: all 0.2s;
+        }
+        .btn-google:active { background: #3367D6; transform: scale(0.98); }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .info-pill {
+        
+        .pill-tag {
             font-size: 10px;
-            font-weight: 700;
-            padding: 4px 10px;
-            border-radius: 8px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            background: #f1f5f9;
+            color: #64748b;
+            display: inline-block;
+            margin-top: 6px;
         }
     </style>
 </head>
-<body class="safe-bottom">
+<body class="bg-slate-50">
 
-    <!-- 顶部导航 -->
-    <header class="bg-white border-b border-slate-100 sticky top-0 z-50">
+    <!-- 顶部 -->
+    <header class="bg-white/95 backdrop-blur shadow-sm sticky top-0 z-50 border-b border-slate-100">
         <div class="flex items-center justify-between px-4 py-3">
             <div class="flex items-center gap-2">
-                <div class="bg-blue-600 text-white p-1.5 rounded-lg shadow-md shadow-blue-100">
-                    <i class="fas fa-car-side text-xs"></i>
+                <div class="bg-blue-600 text-white p-1.5 rounded-lg shadow-blue-200 shadow-md">
+                    <i class="fas fa-location-arrow"></i>
                 </div>
-                <span class="font-black text-slate-800 italic uppercase text-sm tracking-tighter">Dubai Manager 2026</span>
+                <div>
+                    <h1 class="text-sm font-black text-slate-800 uppercase tracking-tighter">Simon Family Dubai Trip 2026</h1>
+                    <p class="text-[9px] text-blue-600 font-bold">Google Maps Only</p>
+                </div>
             </div>
-            <div class="text-[9px] font-bold text-slate-400 bg-slate-50 px-2 py-1 rounded">
-                龙城宜必思核心枢纽
+            <div class="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded-full">
+                2大1小 (4岁)
             </div>
         </div>
         
         <div class="flex gap-2 overflow-x-auto no-scrollbar px-4 pb-3">
-            <button onclick="showDay(1)" id="btn-1" class="nav-btn active px-5 h-10 rounded-xl text-xs font-bold border border-slate-100 bg-slate-50">D1</button>
-            <button onclick="showDay(2)" id="btn-2" class="nav-btn px-5 h-10 rounded-xl text-xs font-bold border border-slate-100 bg-slate-50">D2</button>
-            <button onclick="showDay(3)" id="btn-3" class="nav-btn px-5 h-10 rounded-xl text-xs font-bold border border-slate-100 bg-slate-50">D3</button>
-            <button onclick="showDay(4)" id="btn-4" class="nav-btn px-5 h-10 rounded-xl text-xs font-bold border border-slate-100 bg-slate-50">D4</button>
-            <button onclick="showDay(5)" id="btn-5" class="nav-btn px-5 h-10 rounded-xl text-xs font-bold border border-slate-100 bg-slate-50">D5</button>
-            <button onclick="showDay(6)" id="btn-6" class="nav-btn px-5 h-10 rounded-xl text-xs font-bold border border-slate-100 bg-slate-50">D6</button>
-            <button onclick="showDay(7)" id="btn-7" class="nav-btn px-5 h-10 rounded-xl text-xs font-bold border border-slate-100 bg-slate-50">D7</button>
+            <button onclick="showDay(1)" id="btn-1" class="nav-btn active px-4 h-9 rounded-full text-xs font-bold border border-slate-100 bg-white">D1</button>
+            <button onclick="showDay(2)" id="btn-2" class="nav-btn px-4 h-9 rounded-full text-xs font-bold border border-slate-100 bg-white">D2</button>
+            <button onclick="showDay(3)" id="btn-3" class="nav-btn px-4 h-9 rounded-full text-xs font-bold border border-slate-100 bg-white">D3</button>
+            <button onclick="showDay(4)" id="btn-4" class="nav-btn px-4 h-9 rounded-full text-xs font-bold border border-slate-100 bg-white">D4</button>
+            <button onclick="showDay(5)" id="btn-5" class="nav-btn px-4 h-9 rounded-full text-xs font-bold border border-slate-100 bg-white">D5</button>
+            <button onclick="showDay(6)" id="btn-6" class="nav-btn px-4 h-9 rounded-full text-xs font-bold border border-slate-100 bg-white">D6</button>
+            <button onclick="showDay(7)" id="btn-7" class="nav-btn px-4 h-9 rounded-full text-xs font-bold border border-slate-100 bg-white">D7</button>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto lg:grid lg:grid-cols-12 lg:gap-8 lg:px-8">
         
-        <!-- 地图控制区 -->
+        <!-- 地图面板 -->
         <div class="lg:col-span-7 lg:order-2">
-            <div class="map-container">
+            <div class="map-container relative bg-slate-200">
                 <iframe id="main-map" class="w-full h-full border-none shadow-inner" src="https://maps.google.com/maps?q=Dubai+Airport+Terminal+3&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+                
                 <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center pointer-events-none">
-                    <div class="bg-black/70 backdrop-blur px-3 py-1.5 rounded-full pointer-events-auto">
-                        <span id="route-label" class="text-white text-[10px] font-bold">查看自驾实时路径</span>
+                    <div class="bg-black/80 backdrop-blur px-3 py-1.5 rounded-full pointer-events-auto shadow-lg">
+                        <span id="route-label" class="text-white text-[10px] font-bold">路线追踪</span>
                     </div>
-                    <button class="pointer-events-auto bg-white p-2 rounded-xl shadow-lg" onclick="toggleMapHeight()">
+                    <button class="pointer-events-auto bg-white p-2 rounded-full shadow-xl border border-slate-100" onclick="toggleMapHeight()">
                         <i id="map-toggle-icon" class="fas fa-expand-alt text-slate-600"></i>
                     </button>
                 </div>
             </div>
+            
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-3 mt-4 mx-4 lg:mx-0 rounded-r-lg text-xs text-blue-800 flex items-start gap-2">
+                <i class="fas fa-info-circle mt-0.5"></i>
+                <div>
+                    <span class="font-bold">导航提示：</span> 所有路线基于优化版文档。点击蓝色按钮直接唤起 Google Maps App。
+                </div>
+            </div>
         </div>
 
-        <!-- 行程内容区 -->
-        <div class="lg:col-span-5 lg:order-1 px-4 py-6 space-y-10">
+        <!-- 内容区域 -->
+        <div class="lg:col-span-5 lg:order-1 px-4 py-6 space-y-8">
             
-            <!-- Day 1: 抵达与迎新 -->
+            <!-- Day 1 -->
             <div id="day-1" class="day-section active">
-                <div class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-50">
-                    <h2 class="text-2xl font-black text-slate-800 mb-6 flex justify-between items-center">
-                        D1: 抵达与迎新派对
-                        <span class="text-xs text-blue-500 font-bold">2.11</span>
-                    </h2>
-                    <div class="space-y-4">
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase">05:25 抵达 DXB</p>
-                            <div class="action-card" onclick="route('dxb', 'dxb')">
-                                <p class="text-sm font-bold text-slate-700">T3 航站楼取车 ➔ 前往酒店</p>
-                            </div>
-                        </div>
-                        <div class="time-node home-node">
-                            <p class="text-[10px] font-bold text-green-600 mb-2">09:30 入住/午餐</p>
-                            <div class="action-card mb-2" onclick="route('dxb', 'ibis')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold text-slate-800">龙城宜必思酒店</p>
-                                    <button class="bg-blue-600 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('dxb', 'ibis')">导航 20m</button>
-                                </div>
-                            </div>
-                            <div class="info-pill bg-green-50 text-green-700 inline-block mt-1">午餐: 龙城二期周妈妈中餐 (亲子)</div>
-                        </div>
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-slate-400 mb-2 uppercase">14:00 - 18:00</p>
-                            <div class="action-card" onclick="route('ibis', 'mall')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold">迪拜购物中心 (水族馆)</p>
-                                    <button class="bg-slate-100 text-blue-600 text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('ibis', 'mall')">导航 25m</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="party-node p-5 bg-orange-50 rounded-3xl border border-orange-100">
-                            <p class="text-[10px] font-black text-orange-600 uppercase mb-2 tracking-widest">★ 18:30 晚餐 & 迎新聚会</p>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-sm font-bold text-slate-800" onclick="route('mall', 'nas3')">Nad Al Sheba 3 公司派对</span>
-                                <button class="bg-orange-600 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('mall', 'nas3')">导航 18m</button>
-                            </div>
-                            <p class="text-[9px] text-orange-800 opacity-70">结束后回酒店休息 (15m 车程)。</p>
-                        </div>
+                <h2 class="text-lg font-black text-slate-800 mb-6 px-2 flex justify-between">
+                    D1: 抵达、商务与迎新
+                    <span class="text-slate-400 text-xs font-medium">2.11 周二</span>
+                </h2>
+                
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-slate-400 mb-2">05:25 - 08:00</p>
+                    <div class="action-card" onclick="route('dxb', 'dxb')">
+                        <span class="font-bold text-sm text-slate-800">机场 T3 取车 (约 1.5h)</span>
                     </div>
+                </div>
+
+                <div class="time-node morning-node">
+                    <p class="text-[10px] font-bold text-amber-600 mb-2">08:00 早餐 & 入住</p>
+                    <div class="action-card" onclick="route('dxb', 'ibis')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">前往龙城宜必思</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">45min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('dxb', 'ibis')"><i class="fab fa-google"></i> Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-2 px-1">办理入住，如需等待可先在酒店自助早餐 (08:00-10:00)。</p>
+                </div>
+
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-green-600 mb-2">12:30 午餐</p>
+                    <div class="bg-white p-3 rounded-xl border border-green-100 mb-2 shadow-sm">
+                        <p class="text-xs font-bold text-green-700">龙城附近 Al Reef Bakery</p>
+                        <p class="text-[10px] text-slate-500 mt-1">中东面包简餐，快速解决回房补觉。</p>
+                    </div>
+                </div>
+
+                <div class="time-node business-node !border-l-purple-300">
+                    <p class="text-[10px] font-bold text-purple-600 mb-2 uppercase">15:00 商务行程</p>
+                    <div class="action-card" onclick="route('ibis', 'altameer')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-900">前往 Al Tameer (沙迦)</span>
+                            <span class="text-[10px] bg-white/60 px-2 py-1 rounded text-purple-800">45min</span>
+                        </div>
+                        <button class="btn-google !bg-purple-600" onclick="openGoogle('ibis', 'altameer')">前往商务点</button>
+                        <p class="text-[10px] text-purple-800 mt-2">15:45-16:45 商务考察。</p>
+                    </div>
+                </div>
+
+                <div class="time-node party-node !border-l-orange-400">
+                    <p class="text-[10px] font-bold text-orange-600 mb-2 uppercase">★ 18:30 迎新聚会</p>
+                    <div class="action-card !bg-orange-50 !border-orange-100" onclick="route('altameer', 'nas3')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-900">前往 Nad Al Sheba 3</span>
+                            <span class="text-[10px] bg-white/60 px-2 py-1 rounded text-orange-800">45min</span>
+                        </div>
+                        <button class="btn-google !bg-orange-500" onclick="openGoogle('altameer', 'nas3')"><i class="fas fa-glass-cheers"></i> 前往聚会</button>
+                        <p class="text-[10px] text-orange-800 mt-2 opacity-80">公司聚餐晚餐。20:30 回酒店 (45min)。</p>
+                    </div>
+                </div>
+                
+                <div class="budget-bar">
+                    <span>本日预估支出</span>
+                    <span>¥250</span>
                 </div>
             </div>
 
-            <!-- Day 2: 经典地标线 -->
+            <!-- Day 2: Legoland -->
             <div id="day-2" class="day-section">
-                <div class="bg-white rounded-[32px] p-6 shadow-sm border border-slate-50">
-                    <h2 class="text-2xl font-black text-slate-800 mb-6">D2: 帆船酒店与地球村</h2>
-                    <div class="space-y-4">
-                        <div class="time-node home-node">
-                            <p class="text-[10px] font-bold text-green-600 mb-2">09:30 出发观光</p>
-                            <div class="action-card" onclick="route('ibis', 'burjalarab')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold">参观：帆船酒店 (Jumeirah)</p>
-                                    <button class="bg-blue-600 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('ibis', 'burjalarab')">导航 35m</button>
-                                </div>
-                            </div>
-                            <div class="info-pill bg-green-50 text-green-700 mt-2">午餐: 海滩户外 Cafe</div>
-                        </div>
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-slate-400 mb-2">14:00 驱车路过</p>
-                            <div class="action-card" onclick="route('burjalarab', 'frame')">
-                                <p class="text-sm font-bold text-slate-700">路过欣赏：迪拜之框</p>
-                            </div>
-                        </div>
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-slate-400 mb-2">16:30 亲子狂欢</p>
-                            <div class="action-card" onclick="route('frame', 'globalvillage')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold">畅游地球村 (Global Village)</p>
-                                    <button class="bg-blue-600 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('frame', 'globalvillage')">导航 30m</button>
-                                </div>
-                            </div>
-                            <div class="info-pill bg-green-50 text-green-700 mt-2">晚餐: 地球村各国小吃街</div>
-                        </div>
+                <div class="flex justify-between items-end mb-4 px-1">
+                    <h2 class="text-lg font-black text-slate-800">D2: 迪拜乐高乐园全天</h2>
+                    <span class="text-xs text-slate-400 font-bold">2月12日 周三</span>
+                </div>
+                
+                <div class="time-node morning-node">
+                    <p class="text-[10px] font-bold text-amber-600 mb-2">08:00 酒店自助早餐</p>
+                    <div class="bg-amber-50 p-2 rounded-lg text-[10px] text-amber-800">
+                        慢慢享用早餐，9:00 准时出发。
                     </div>
+                </div>
+
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-slate-400 mb-2">09:00 出发</p>
+                    <div class="action-card" onclick="route('ibis', 'legoland')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">前往乐高乐园</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">25min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('ibis', 'legoland')">Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-2 px-1">午餐推荐：园内 Marketplace Cafe。</p>
+                </div>
+
+                <div class="time-node home-node">
+                    <p class="text-[10px] font-bold text-green-600 mb-2">16:30 返回</p>
+                    <div class="action-card" onclick="route('legoland', 'ibis')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">返回龙城</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">25min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('legoland', 'ibis')">Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-green-600 mt-2 px-1">晚餐推荐：Zaroob (龙城附近)。</p>
+                </div>
+
+                <div class="budget-bar">
+                    <span>本日预估支出</span>
+                    <span>¥2,270</span>
                 </div>
             </div>
 
-            <!-- Day 3: 商务与IMG -->
+            <!-- Day 3: IMG Worlds -->
             <div id="day-3" class="day-section">
-                <div class="bg-white rounded-[32px] p-6 shadow-sm border-l-8 border-indigo-500">
-                    <h2 class="text-2xl font-black text-slate-800 mb-1">D3: 商务参观与 IMG</h2>
-                    <p class="text-[10px] font-bold text-indigo-600 mb-6 tracking-widest uppercase">2.13 (Day 3 & 5 已对调)</p>
-                    <div class="space-y-4">
-                        <div class="time-node business-node">
-                            <p class="text-[10px] font-bold text-indigo-600 mb-2">09:30 商务访问</p>
-                            <div class="action-card" onclick="route('ibis', 'altameer')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold">Al Tameer 建材公司参观</p>
-                                    <button class="bg-indigo-600 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('ibis', 'altameer')">导航 20m</button>
-                                </div>
-                            </div>
-                            <p class="text-[9px] text-slate-400 mt-1 px-1">时长：1 小时。孩子可在商务接待区休息。</p>
-                        </div>
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-slate-400 mb-2">11:00 室内游玩</p>
-                            <div class="action-card" onclick="route('altameer', 'img')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold text-slate-800">IMG Worlds (全室内/亲子)</p>
-                                    <button class="bg-blue-600 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('altameer', 'img')">导航 20m</button>
-                                </div>
-                            </div>
-                            <div class="info-pill bg-green-50 text-green-700 mt-2">午餐: 乐高或卡通频道餐厅</div>
-                        </div>
-                        <div class="meal-node p-4 bg-green-50 rounded-2xl">
-                            <p class="text-xs font-bold text-green-700">晚餐: 回酒店旁吃正宗粤菜 (龙腾轩)</p>
-                        </div>
+                <div class="flex justify-between items-end mb-4 px-1">
+                    <h2 class="text-lg font-black text-slate-800">D3: IMG 冒险世界</h2>
+                    <span class="text-xs text-slate-400 font-bold">2月13日 周四</span>
+                </div>
+                
+                <div class="time-node morning-node">
+                    <p class="text-[10px] font-bold text-amber-600 mb-2">08:00 酒店自助早餐</p>
+                    <div class="bg-amber-50 p-2 rounded-lg text-[10px] text-amber-800">
+                        悠闲早餐，9:00 出发。
                     </div>
+                </div>
+
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-slate-400 mb-2">09:00 出发</p>
+                    <div class="action-card" onclick="route('ibis', 'img')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">前往 IMG 冒险世界</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">20min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('ibis', 'img')">Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-2 px-1">全室内乐园。午餐推荐：卡通频道区。</p>
+                </div>
+
+                <div class="time-node home-node">
+                    <p class="text-[10px] font-bold text-green-600 mb-2">15:30 返回</p>
+                    <div class="action-card" onclick="route('img', 'ibis')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">返回酒店休息</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">20min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('img', 'ibis')">Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-green-600 mt-2 px-1">晚餐推荐：Zaroob (龙城附近)。</p>
+                </div>
+
+                <div class="budget-bar">
+                    <span>本日预估支出</span>
+                    <span>¥2,270</span>
                 </div>
             </div>
 
-            <!-- Day 4: 乐高全天 -->
+            <!-- Day 4: City Tour -->
             <div id="day-4" class="day-section">
-                <div class="bg-white rounded-[32px] p-6 shadow-sm border-l-8 border-yellow-400">
-                    <h2 class="text-2xl font-black text-slate-800 mb-6 flex items-center gap-2">
-                        <i class="fas fa-puzzle-piece text-yellow-500"></i> D4: 乐高乐园日
-                    </h2>
-                    <div class="time-node home-node">
-                        <p class="text-[10px] font-bold text-green-600 mb-2">09:30 出发</p>
-                        <div class="action-card" onclick="route('ibis', 'legoland')">
-                            <div class="flex justify-between items-center">
-                                <p class="text-sm font-bold">迪拜乐高乐园 (全天)</p>
-                                <button class="bg-yellow-500 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('ibis', 'legoland')">导航 50m</button>
-                            </div>
-                        </div>
-                        <div class="info-pill bg-green-50 text-green-700 mt-4">午餐: Market Restaurant (儿童套餐)</div>
-                        <p class="text-[10px] text-slate-500 mt-2 italic px-1">回程约 19:00 出发，避开晚间第一波大堵车。</p>
+                <div class="flex justify-between items-end mb-4 px-1">
+                    <h2 class="text-lg font-black text-slate-800">D4: 帆船酒店与地球村</h2>
+                    <span class="text-xs text-slate-400 font-bold">2月14日 周五</span>
+                </div>
+                
+                <div class="time-node morning-node">
+                    <p class="text-[10px] font-bold text-amber-600 mb-2">08:00 酒店自助早餐</p>
+                    <div class="bg-amber-50 p-2 rounded-lg text-[10px] text-amber-800">
+                        今日行程较满，建议吃饱，9:00 准时出发。
                     </div>
+                </div>
+
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-slate-400 mb-2">09:00 出发</p>
+                    <div class="action-card" onclick="route('ibis', 'burjalarab')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">前往帆船酒店</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">25min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('ibis', 'burjalarab')">Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-2 px-1">09:30 参观。午餐：酒店内高端餐饮。</p>
+                </div>
+
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-slate-400 mb-2">12:30 购物</p>
+                    <div class="action-card" onclick="route('burjalarab', 'mall')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">前往迪拜 Mall</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">20min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('burjalarab', 'mall')">Google 导航</button>
+                    </div>
+                </div>
+
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-slate-400 mb-2">16:00 晚间游玩</p>
+                    <div class="action-card" onclick="route('mall', 'globalvillage')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">前往地球村</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">30min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('mall', 'globalvillage')">Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-2 px-1">晚餐：地球村美食街。</p>
+                </div>
+
+                <div class="time-node home-node">
+                    <p class="text-[10px] font-bold text-green-600 mb-2">19:30 返回</p>
+                    <div class="action-card" onclick="route('globalvillage', 'ibis')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">返回酒店</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">30min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('globalvillage', 'ibis')">Google 导航</button>
+                    </div>
+                </div>
+
+                <div class="budget-bar">
+                    <span>本日预估支出</span>
+                    <span>¥2,070</span>
                 </div>
             </div>
 
-            <!-- Day 5: 阿布扎比远征 -->
+            <!-- Day 5: Abu Dhabi -->
             <div id="day-5" class="day-section">
-                <div class="bg-white rounded-[32px] p-6 shadow-sm border-l-8 border-indigo-600">
-                    <h2 class="text-2xl font-black text-slate-800 mb-6">D5: 阿布扎比全景</h2>
-                    <div class="space-y-4">
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-slate-400 mb-2">08:00 跨城自驾</p>
-                            <div class="action-card" onclick="route('ibis', 'mosque')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold">谢赫扎耶德大清真寺</p>
-                                    <button class="bg-blue-600 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold" onclick="openNav('ibis', 'mosque')">导航 1.5h</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="meal-node p-4 bg-green-50 rounded-2xl">
-                            <p class="text-[10px] font-bold text-green-700 mb-2">午餐: Yas Mall 美食街 (中转)</p>
-                            <div class="flex justify-between items-center" onclick="route('mosque', 'yasmall')">
-                                <span class="text-xs font-bold text-slate-700 italic">点此查看跨岛路线 ➔</span>
-                                <i class="fas fa-chevron-right text-slate-300"></i>
-                            </div>
-                        </div>
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-slate-400 mb-2">13:30 乐园游玩</p>
-                            <div class="action-card" onclick="route('yasmall', 'wb')">
-                                <p class="text-sm font-bold">华纳兄弟主题公园</p>
-                            </div>
-                            <p class="text-[10px] text-slate-500 mt-4 font-bold text-red-500"><i class="fas fa-car-crash mr-1"></i>驾驶提醒：回程限速 140km 零宽限。</p>
-                        </div>
+                <div class="flex justify-between items-end mb-4 px-1">
+                    <h2 class="text-lg font-black text-slate-800">D5: 阿布扎比深度游</h2>
+                    <span class="text-xs text-slate-400 font-bold">2.15 周日</span>
+                </div>
+                
+                <div class="time-node morning-node">
+                    <p class="text-[10px] font-bold text-amber-600 mb-2">08:00 酒店自助早餐</p>
+                    <div class="bg-amber-50 p-2 rounded-lg text-[10px] text-amber-800">
+                        今日跨城，建议8点用餐，9:00 准时出发。
                     </div>
+                </div>
+
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-slate-400 mb-2">09:00 跨城自驾</p>
+                    <div class="action-card" onclick="route('ibis', 'mosque')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">前往大清真寺</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">1.5h</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('ibis', 'mosque')">Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-2 px-1">午餐：Al Reef Bakery (清真寺附近)。</p>
+                </div>
+
+                <div class="time-node">
+                    <p class="text-[10px] font-bold text-slate-400 mb-2">13:00 乐园游玩</p>
+                    <div class="action-card" onclick="route('mosque', 'wb')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">前往华纳兄弟乐园</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">45min</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('mosque', 'wb')">Google 导航</button>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mt-2 px-1">晚餐：乐园内。19:00 回程。</p>
+                </div>
+
+                <div class="time-node home-node">
+                    <p class="text-[10px] font-bold text-green-600 mb-2">19:00 返回</p>
+                    <div class="action-card" onclick="route('wb', 'ibis')">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm text-slate-800">返回龙城</span>
+                            <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">1.5h</span>
+                        </div>
+                        <button class="btn-google" onclick="openGoogle('wb', 'ibis')">Google 导航</button>
+                    </div>
+                </div>
+
+                <div class="budget-bar">
+                    <span>本日预估支出</span>
+                    <span>¥2,280</span>
                 </div>
             </div>
 
-            <!-- Day 6: 除夕巅峰之夜 -->
+            <!-- Day 6: CNY Eve -->
             <div id="day-6" class="day-section">
-                <div class="bg-slate-900 rounded-[40px] p-6 shadow-2xl text-white">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <h2 class="text-2xl font-black">D6: 除夕团圆之夜</h2>
-                            <p class="text-amber-400 text-[10px] font-bold uppercase tracking-widest mt-1">2.16 大年三十 · 春节派对</p>
-                        </div>
-                        <i class="fas fa-moon text-amber-400 text-xl"></i>
-                    </div>
+                <div class="bg-slate-900 text-white rounded-3xl p-6 shadow-xl">
+                    <h2 class="text-xl font-black mb-1">D6: 除夕团圆夜</h2>
+                    <p class="text-amber-400 text-[10px] font-bold uppercase tracking-widest mb-6">2.16 大年三十</p>
                     
-                    <div class="space-y-4">
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-white/40 mb-2 uppercase">09:30 预约参观</p>
-                            <div class="action-card !bg-slate-800 !border-slate-700" onclick="route('ibis', 'museumoffuture')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold text-white">未来博物馆</p>
-                                    <button class="bg-slate-700 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold border border-slate-600" onclick="openNav('ibis', 'museumoffuture')">导航 25m</button>
-                                </div>
-                            </div>
-                            <div class="info-pill bg-slate-700 text-white mt-2">午餐: 市中心 P.F. Chang's</div>
-                        </div>
+                    <div class="time-node !border-l-slate-700 morning-node">
+                        <p class="text-[10px] font-bold text-amber-400 mb-2">08:00 酒店自助早餐</p>
+                        <p class="text-[10px] text-slate-400">9:00 出发，开启地标巡礼。</p>
+                    </div>
 
-                        <div class="time-node">
-                            <p class="text-[10px] font-bold text-white/40 mb-2 uppercase">13:30 海滨与岛屿</p>
-                            <div class="action-card !bg-slate-800 !border-slate-700" onclick="route('museumoffuture', 'jumeirahbeach')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold text-white">朱美拉海滩漫步</p>
-                                    <button class="bg-slate-700 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold border border-slate-600" onclick="openNav('museumoffuture', 'jumeirahbeach')">导航 20m</button>
-                                </div>
+                    <div class="time-node !border-l-slate-600">
+                        <p class="text-[10px] font-bold text-slate-500 mb-2">09:00 经典巡礼</p>
+                        <div class="action-card !bg-slate-800 !border-slate-700" onclick="route('ibis', 'goldsouk')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-sm text-white">黄金市场 & 老城区</span>
+                                <span class="text-[10px] bg-slate-700 px-2 py-1 rounded text-slate-300">30min</span>
                             </div>
-                            <div class="action-card !bg-slate-800 !border-slate-700 mt-3" onclick="route('jumeirahbeach', 'palm')">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-sm font-bold text-white">棕榈岛自驾观光</p>
-                                    <button class="bg-slate-700 text-white text-[10px] px-3 py-1.5 rounded-lg font-bold border border-slate-600" onclick="openNav('jumeirahbeach', 'palm')">导航 15m</button>
-                                </div>
-                            </div>
+                            <button class="btn-google !bg-slate-700 !text-white !border-slate-600" onclick="openGoogle('ibis', 'goldsouk')">Google 导航</button>
                         </div>
+                        <p class="text-[10px] text-slate-400 mt-2 px-1">午餐：Al Mallah (黎巴嫩烤肉)。</p>
+                    </div>
 
-                        <div class="bg-amber-500 p-5 rounded-3xl text-slate-900 mt-6 shadow-xl">
-                            <p class="text-[10px] font-black uppercase mb-1 tracking-wider"><i class="fas fa-fire-alt mr-1"></i> 18:00 除夕正式聚会</p>
-                            <div class="flex justify-between items-center mb-2">
-                                <span class="text-lg font-black">NAS 3 公司总部晚宴</span>
-                                <button class="bg-slate-900 text-white text-[11px] px-4 py-2 rounded-xl font-bold" onclick="openNav('palm', 'nas3')">导航 25m</button>
+                    <div class="time-node !border-l-slate-600">
+                        <p class="text-[10px] font-bold text-slate-500 mb-2">13:30 观光 & 汇合</p>
+                        <div class="action-card !bg-slate-800 !border-slate-700 mb-2" onclick="route('goldsouk', 'palm')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-sm text-white">朱美拉棕榈岛</span>
+                                <button class="btn-google !bg-slate-700 !text-white !border-slate-600" onclick="openGoogle('goldsouk', 'palm')">前往</button>
                             </div>
-                            <p class="text-[9px] font-bold opacity-80 leading-tight">公司除夕年夜饭排队。结束后 15m 回龙城休息。</p>
                         </div>
+                        <div class="action-card !bg-slate-800 !border-slate-700" onclick="route('palm', 'aura')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-sm text-white">15:10 AURA 汇合</span>
+                                <button class="btn-google !bg-slate-700 !text-white !border-slate-600" onclick="openGoogle('palm', 'aura')">前往</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="party-node !border-l-amber-500 !bg-slate-800 !p-3 !rounded-xl">
+                        <p class="text-[10px] font-bold text-amber-400 mb-2">16:45 除夕聚会</p>
+                        <div class="action-card !bg-slate-700 !border-slate-600" onclick="route('aura', 'nas3')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-sm text-white">前往 NAS 3 团圆饭</span>
+                                <button class="btn-google !bg-amber-500 !text-slate-900 !border-none" onclick="openGoogle('aura', 'nas3')">Google 导航</button>
+                            </div>
+                        </div>
+                        <p class="text-[9px] text-slate-400 mt-2 opacity-80">21:00 闭环回龙城 (45min)。</p>
+                    </div>
+
+                    <div class="budget-bar !bg-slate-800 !text-amber-400 !border-slate-700 mt-4">
+                        <span>本日预估支出</span>
+                        <span>¥915</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Day 7: 返程 -->
+            <!-- Day 7: Return -->
             <div id="day-7" class="day-section">
-                <div class="bg-white rounded-[32px] p-6 shadow-sm border-l-8 border-green-500">
-                    <h2 class="text-2xl font-black text-slate-800 mb-6">D7: 初一顺利返程</h2>
-                    <div class="bg-green-50 p-6 rounded-3xl">
-                        <p class="text-[10px] font-bold text-green-700 mb-1 uppercase">07:45 准时出发</p>
-                        <div class="flex justify-between items-center mb-4">
-                            <p class="text-sm font-bold text-green-900">前往 T3 机场还车</p>
-                            <button class="bg-green-600 text-white text-[10px] px-4 py-2 rounded-xl font-bold" onclick="openNav('ibis', 'dxb')">导航 20m</button>
+                <div class="bg-green-50 rounded-2xl p-5 border border-green-200">
+                    <h2 class="text-lg font-black text-green-800 mb-4">D7: 顺利返程</h2>
+                    <span class="text-xs text-green-700 font-bold mb-4 block">2月17日 周一</span>
+                    
+                    <div class="time-node morning-node">
+                        <p class="text-[10px] font-bold text-green-700 mb-2">06:00 起床 & 06:30 早餐</p>
+                        <p class="text-[10px] text-slate-500">早起收拾行李，06:30 享用最后一次酒店早餐。</p>
+                    </div>
+
+                    <div class="time-node">
+                        <p class="text-[10px] font-bold text-green-600 mb-2">07:30 出发</p>
+                        <div class="action-card" onclick="route('ibis', 'dxb')">
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-sm text-slate-800">前往 T3 机场还车</span>
+                                <span class="text-[10px] bg-slate-100 px-2 py-1 rounded text-slate-500">45min</span>
+                            </div>
+                            <button class="btn-google !bg-green-600 !border-green-600" onclick="openGoogle('ibis', 'dxb')">Google 导航</button>
                         </div>
-                        <p class="text-xs text-green-700 font-medium leading-relaxed">
-                            <i class="fas fa-check-circle mr-1"></i>10:45 起飞返深。<br>
-                            祝您全家龙年大吉，万事大吉！
-                        </p>
+                        <p class="text-[10px] text-green-700 mt-3 font-medium text-center">10:45 起飞 · 祝您新年快乐！</p>
+                    </div>
+
+                    <div class="budget-bar !bg-green-100 !text-green-800 !border-green-300">
+                        <span>本日预估支出</span>
+                        <span>¥70</span>
                     </div>
                 </div>
             </div>
@@ -390,48 +559,33 @@
         const poi = {
             'dxb': 'Dubai International Airport Terminal 3',
             'ibis': 'Ibis Styles Dubai Dragon Mart',
-            'mall': 'The Dubai Mall Aquarium',
+            'mall': 'The Dubai Mall',
             'nas3': 'Nad Al Sheba 3, Dubai',
-            'burjalarab': 'Burj Al Arab Jumeirah Beach',
+            'burjalarab': 'Burj Al Arab Jumeirah',
             'globalvillage': 'Global Village Dubai',
-            'museumoffuture': 'Museum of the Future Dubai',
-            'palm': 'Atlantis The Palm Jumeirah',
+            'museumoffuture': 'Museum of the Future',
+            'jumeirahbeach': 'Jumeirah Beach',
+            'palm': 'Atlantis The Palm',
             'frame': 'Dubai Frame',
-            'mosque': 'Sheikh Zayed Grand Mosque, Abu Dhabi',
-            'wb': 'Warner Bros. World Abu Dhabi',
-            'legoland': 'LEGOLAND Dubai Theme Park',
-            'img': 'IMG Worlds of Adventure Dubai',
-            'altameer': 'Al Tameer United Building Materials Trading L.L.C',
-            'yasmall': 'Yas Mall Abu Dhabi'
+            'mosque': 'Sheikh Zayed Grand Mosque',
+            'wb': 'Warner Bros World Abu Dhabi',
+            'legoland': 'LEGOLAND Dubai',
+            'img': 'IMG Worlds of Adventure',
+            'altameer': 'Al Tameer United Building Materials',
+            'yasmall': 'Yas Mall',
+            'goldsouk': 'Dubai Gold Souk',
+            'aura': 'AURA Skypool Dubai'
         };
 
         const dayDefaultRoutes = {
             1: ['dxb', 'ibis'],
-            2: ['ibis', 'burjalarab'],
+            2: ['ibis', 'legoland'],
             3: ['ibis', 'altameer'],
-            4: ['ibis', 'legoland'],
+            4: ['ibis', 'burjalarab'],
             5: ['ibis', 'mosque'],
-            6: ['ibis', 'museumoffuture'],
+            6: ['ibis', 'goldsouk'],
             7: ['ibis', 'dxb']
         };
-
-        let isMapExpanded = false;
-
-        function toggleMapHeight() {
-            const container = document.querySelector('.map-container');
-            const icon = document.getElementById('map-toggle-icon');
-            if (window.innerWidth >= 1024) return;
-
-            if (isMapExpanded) {
-                container.style.height = '240px';
-                icon.className = 'fas fa-expand-alt text-slate-600';
-            } else {
-                container.style.height = '420px';
-                icon.className = 'fas fa-compress-alt text-slate-600';
-                window.scrollTo({ top: 64, behavior: 'smooth' });
-            }
-            isMapExpanded = !isMapExpanded;
-        }
 
         function showDay(day) {
             document.querySelectorAll('.day-section').forEach(s => s.classList.remove('active'));
@@ -441,7 +595,7 @@
             
             const [f, t] = dayDefaultRoutes[day];
             route(f, t);
-            if (isMapExpanded) toggleMapHeight();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function route(fromKey, toKey) {
@@ -450,26 +604,37 @@
             const label = document.getElementById('route-label');
             
             if (fromKey === toKey) {
-                label.innerText = `定位: ${poi[toKey].split(',')[0]}`;
+                label.innerText = `定位: ${poi[toKey]}`;
                 document.getElementById('main-map').src = `https://maps.google.com/maps?q=${origin}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
             } else {
-                label.innerText = `${fromKey.toUpperCase()} ➔ ${toKey.toUpperCase()} 路径预览`;
+                label.innerText = `预览: ${poi[fromKey]} ➔ ${poi[toKey]}`;
                 document.getElementById('main-map').src = `https://maps.google.com/maps?saddr=${origin}&daddr=${destination}&t=&z=12&ie=UTF8&iwloc=&output=embed`;
             }
         }
 
-        function updateMapDirect(query) {
-            const q = encodeURIComponent(query);
-            document.getElementById('main-map').src = `https://maps.google.com/maps?q=${q}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-            document.getElementById('route-label').innerText = `搜索: ${query}`;
-            window.scrollTo({ top: 64, behavior: 'smooth' });
-        }
-
-        function openNav(fromKey, toKey) {
+        function openGoogle(fromKey, toKey) {
             const origin = encodeURIComponent(poi[fromKey]);
             const destination = encodeURIComponent(poi[toKey]);
             const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}`;
             window.open(url, '_blank');
+        }
+
+        // Toggle map height for mobile view
+        let isMapExpanded = false;
+        function toggleMapHeight() {
+            const container = document.querySelector('.map-container');
+            const icon = document.getElementById('map-toggle-icon');
+            if (window.innerWidth >= 1024) return;
+
+            if (isMapExpanded) {
+                container.style.height = '220px';
+                icon.className = 'fas fa-expand-alt text-slate-600 text-xs';
+            } else {
+                container.style.height = '400px';
+                icon.className = 'fas fa-compress-alt text-slate-600 text-xs';
+                window.scrollTo({ top: 60, behavior: 'smooth' });
+            }
+            isMapExpanded = !isMapExpanded;
         }
 
         window.onload = () => showDay(1);
